@@ -7,6 +7,9 @@
 *.obj
 *.elf
 
+.vscode/*
+c_cpp_properties.json
+
 # Linker output
 *.ilk
 *.map
