@@ -1,7 +1,8 @@
-#include "location.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include "location.h"
+
 
 /*
  * Parse potential user inputs and call relevant handlers
@@ -12,8 +13,9 @@
 bool parseAndExecute(char *input)
 {
   char *next_token;
-  char *verb = strtok_s(input, " \n", &next_token);
-  char *noun = strtok_s(NULL, " \n", &next_token);
+  char *next_token_2;
+  char *verb = strtok(input, " \n");
+  char *noun = strtok(NULL, " \n");
 
   if (verb != NULL)
   {

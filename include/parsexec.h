@@ -1,5 +1,2 @@
-#ifndef PARSEXEC_H_INCLUDED
-#define PARSEXEC_H_INCLUDED
-
+#include <stdbool.h>
 extern bool parseAndExecute(char *input);
-#endif

@@ -1,18 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-
-struct location
-{
-    const char *description;
-    const char *tag;
-}
-
-/* Define some locations in the game */
-locs[] = {{"your home", "home"}, {"the street", "street"}};
-
-#define numberOfLocations (sizeof locs / sizeof *locs)
-
-static unsigned locationOfPlayer = 0;
+#include "object.h"
+#include "misc.h"
+#include "noun.h"
 
 /*
  * Prints the location description if "around" is given
@@ -24,7 +14,8 @@ void executeLook(const char *noun)
 
     if (noun != NULL && strcmp(noun, "around") == 0)
     {
-        printf("You are in %s.\n", locs[locationOfPlayer].description);
+        printf("You are in %s.\n", player->location->description);
+        listObjectsAtLocation(player->location);
     }
     else
     {
@@ -39,23 +30,16 @@ void executeLook(const char *noun)
  */
 void executeGo(const char *noun)
 {
-    unsigned i;
-    for (i = 0; i < numberOfLocations; i++)
+    OBJECT *obj = getVisible("where you want to go", noun);
+    if (obj == NULL)
+        ;
+    else if (obj->location == NULL && obj != player->location)
     {
-        if (noun != NULL && strcmp(noun, locs[i].tag) == 0)
-        {
-            if (i == locationOfPlayer)
-            {
-                printf("You're as close as you can get!\n");
-            }
-            else
-            {
-                printf("Ok.\n");
-                locationOfPlayer = i;
-                executeLook("around");
-            }
-            return;
-        }
+        printf("Ok.\n");
+        player->location = obj;
+        executeLook("around");
     }
-    printf("I don't understand where you want to go.\n");
+
+    else
+        printf("You can't get any closer.\n");
 }
